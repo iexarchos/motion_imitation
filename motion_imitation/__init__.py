@@ -9,9 +9,17 @@ def register(env_id, *args, **kvargs):
     return gym.envs.registration.register(env_id, *args, **kvargs)
 
 
+
 register(
-    env_id='A1GymEnv-v1',
-    entry_point='locomotion.envs.gym_envs:A1GymEnv',
-    max_episode_steps=2000,
-    reward_threshold=2000.0,
+env_id='A1GymEnv-v1',
+entry_point='motion_imitation.envs.gym_envs:A1GymEnv',
+max_episode_steps=2000,
+reward_threshold=2000.0,
+)
+
+register(
+env_id='A1GymEnvScaled-v1',
+entry_point='motion_imitation.envs.gym_envs:A1ScaledGymEnv',
+max_episode_steps=2000,
+reward_threshold=2000.0,
 )

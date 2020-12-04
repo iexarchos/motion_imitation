@@ -377,3 +377,31 @@ class PoseSensor(sensor.BoxSpaceSensor):
   def _get_observation(self) -> _ARRAY:
     return np.concatenate((self._robot.GetBasePosition()[:2],
                            (self._robot.GetTrueBaseRollPitchYaw()[2],)))
+
+
+
+class ScaleSensor(sensor.BoxSpaceSensor):
+  """A sensor that reads the base position of the Minitaur robot."""
+
+  def __init__(self,
+               lower_bound: _FLOAT_OR_ARRAY = 0.5,
+               upper_bound: _FLOAT_OR_ARRAY = 1.5,
+               name: typing.Text = "Scales",
+               dtype: typing.Type[typing.Any] = np.float64) -> None:
+    """Constructs ScaleSensor.
+
+    Args:
+      lower_bound: the lower bound of the base position of the robot.
+      upper_bound: the upper bound of the base position of the robot.
+      name: the name of the sensor
+      dtype: data type of sensor value
+    """
+    super(ScaleSensor, self).__init__(
+        name=name,
+        shape=(4,),  # scale 1 through 4
+        lower_bound=lower_bound,
+        upper_bound=upper_bound,
+        dtype=dtype)
+
+  def _get_observation(self) -> _ARRAY:
+    return self._robot.SCALES

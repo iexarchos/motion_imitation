@@ -19,7 +19,7 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
 
-from motion_imitation.envs import locomotion_gym_env
+from motion_imitation.envs import locomotion_gym_env, locomotion_gym_env_scaled
 from motion_imitation.envs import locomotion_gym_config
 from motion_imitation.envs.env_wrappers import imitation_wrapper_env
 from motion_imitation.envs.env_wrappers import observation_dictionary_to_array_wrapper
@@ -156,6 +156,57 @@ def build_regular_env(robot_class,
   task = simple_forward_task.SimpleForwardTask()
 
   env = locomotion_gym_env.LocomotionGymEnv(gym_config=gym_config,
+                                            robot_class=robot_class,
+                                            robot_sensors=sensors,
+                                            task=task)
+
+  env = obs_dict_to_array_wrapper.ObservationDictionaryToArrayWrapper(
+      env)
+  if (motor_control_mode
+      == robot_config.MotorControlMode.POSITION) and wrap_trajectory_generator:
+    if robot_class == laikago.Laikago:
+      env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(
+          env,
+          trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(
+              action_limit=action_limit))
+    elif robot_class == a1.A1:
+      env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(
+          env,
+          trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(
+              action_limit=action_limit))
+  return env
+
+
+def build_scaled_env(robot_class,
+                      motor_control_mode,
+                      enable_rendering=False,
+                      on_rack=False,
+                      action_limit=(0.75, 0.75, 0.75),
+                      wrap_trajectory_generator=True):
+
+  sim_params = locomotion_gym_config.SimulationParameters()
+  sim_params.enable_rendering = enable_rendering
+  sim_params.motor_control_mode = motor_control_mode
+  sim_params.reset_time = 2
+  sim_params.num_action_repeat = 10
+  sim_params.enable_action_interpolation = False
+  sim_params.enable_action_filter = False
+  sim_params.enable_clip_motor_commands = False
+  sim_params.robot_on_rack = on_rack
+
+  gym_config = locomotion_gym_config.LocomotionGymConfig(
+      simulation_parameters=sim_params)
+
+  sensors = [
+      robot_sensors.BaseDisplacementSensor(),
+      robot_sensors.IMUSensor(),
+      robot_sensors.MotorAngleSensor(num_motors=a1.NUM_MOTORS),
+      robot_sensors.ScaleSensor(),
+  ]
+
+  task = simple_forward_task.SimpleForwardTask()
+
+  env = locomotion_gym_env_scaled.LocomotionGymEnvScaled(gym_config=gym_config,
                                             robot_class=robot_class,
                                             robot_sensors=sensors,
                                             task=task)
