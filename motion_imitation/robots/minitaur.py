@@ -96,7 +96,7 @@ class Minitaur(object):
                motor_model_class=minitaur_motor.MotorModel,
                motor_kp=1.0,
                motor_kd=0.02,
-               motor_torque_limits=None,
+               motor_torque_limits=33.5, #EDIT: WAS None IN ORIGINAL motion-imitation REPO!!!!
                pd_latency=0.0,
                control_latency=0.0,
                observation_noise_stdev=SENSOR_NOISE_STDDEV,

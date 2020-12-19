@@ -1,8 +1,9 @@
 ---------------------------------------------------------------- POSITION CONTROL ----------------------------------------------------------------------------
-python train_policy.py --env-name "A1GymEnv-v1" --algo ppo --use-gae --log-interval 10  --num-steps 1500  --num-processes 8  --lr 3e-4 --entropy-coef 0 --ppo-epoch 10 --num-mini-batch 32 --gamma 0.99  --gae-lambda 0.95 --num-env-steps 10000000 --use-linear-lr-decay   --clip-param 0.2  --use-proper-time-limits --save-dir  12_03_nominal_policy --seed 20061 
+python train_policy.py --env-name "A1GymEnv-v1" --algo ppo --use-gae --log-interval 10  --num-steps 1500  --num-processes 8  --lr 3e-4 --entropy-coef 0 --ppo-epoch 10 --num-mini-batch 32 --gamma 0.99  --gae-lambda 0.95 --num-env-steps 10000000 --use-linear-lr-decay   --clip-param 0.2  --use-proper-time-limits --save-dir  12_18_nominal_policy --seed 20061 
 
 
 
+python train_policy.py --env-name "A1GymEnv-v1" --algo ppo --use-gae --log-interval 10  --num-steps 1500  --num-processes 1  --lr 3e-4 --entropy-coef 0 --ppo-epoch 10 --num-mini-batch 32 --gamma 0.99  --gae-lambda 0.95 --num-env-steps 10000000 --use-linear-lr-decay   --clip-param 0.2  --use-proper-time-limits --save-dir  test --seed 20061 
 
 
 python train_policy.py --env-name "A1GymEnvScaled-v1" --algo ppo --use-gae --log-interval 10  --num-steps 1500  --num-processes 8  --lr 3e-4 --entropy-coef 0 --ppo-epoch 10 --num-mini-batch 32 --gamma 0.99  --gae-lambda 0.95 --num-env-steps 10000000 --use-linear-lr-decay   --clip-param 0.2  --use-proper-time-limits --save-dir  test --seed 20061 

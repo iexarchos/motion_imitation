@@ -27,6 +27,7 @@ from motion_imitation.envs.env_wrappers import observation_dictionary_to_array_w
 from motion_imitation.envs.env_wrappers import trajectory_generator_wrapper_env
 from motion_imitation.envs.env_wrappers import simple_openloop
 from motion_imitation.envs.env_wrappers import simple_forward_task
+from motion_imitation.envs.env_wrappers import PPO_locomotion_task
 from motion_imitation.envs.env_wrappers import imitation_task
 from motion_imitation.envs.env_wrappers import default_task
 
@@ -140,7 +141,7 @@ def build_regular_env(robot_class,
   sim_params.reset_time = 2
   sim_params.num_action_repeat = 10
   sim_params.enable_action_interpolation = False
-  sim_params.enable_action_filter = False
+  sim_params.enable_action_filter = True  #EDIT: WAS FALSE IN ORIGINAL motion-imitation REPO!!!!
   sim_params.enable_clip_motor_commands = False
   sim_params.robot_on_rack = on_rack
 
@@ -153,7 +154,8 @@ def build_regular_env(robot_class,
       robot_sensors.MotorAngleSensor(num_motors=a1.NUM_MOTORS),
   ]
 
-  task = simple_forward_task.SimpleForwardTask()
+  #task = simple_forward_task.SimpleForwardTask() #EDIT: THIS WAS USED IN THE ORIGINAL motion-imitation REPO!!!!
+  task = PPO_locomotion_task.PPOLocomotionTask()
 
   env = locomotion_gym_env.LocomotionGymEnv(gym_config=gym_config,
                                             robot_class=robot_class,
@@ -190,7 +192,7 @@ def build_scaled_env(robot_class,
   sim_params.reset_time = 2
   sim_params.num_action_repeat = 10
   sim_params.enable_action_interpolation = False
-  sim_params.enable_action_filter = False
+  sim_params.enable_action_filter = True
   sim_params.enable_clip_motor_commands = False
   sim_params.robot_on_rack = on_rack
 
