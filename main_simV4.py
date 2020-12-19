@@ -118,7 +118,6 @@ def testPolicy(path,scales=None,pol_scales=None):
         N_sim = processes
         TotalReward = np.zeros((processes,))   
         obs=env.reset()
-  V_targets**2      #bp()
         #bp()
         n = 0
         while n<N_sim:
@@ -153,5 +152,5 @@ if __name__ == '__main__':
     pol_scales = None
     #path = '/home/yannis/Repositories/motion_imitation/12_03_nominal_policy/ppo/A1GymEnv-v1.pt'
     #path = '/home/yannis/Repositories/motion_imitation/12_11_nominal_policy/ppo/A1GymEnv-v1.pt'
-    path = '/home/yannis/Repositories/motion_imitation/12_15_nominal_policy/ppo/A1GymEnv-v1.pt'
+    path = '/home/yannis/Repositories/motion_imitation/12_18_nominal_policy/ppo/A1GymEnv-v1.pt'
     testPolicy(path,scales,pol_scales)
