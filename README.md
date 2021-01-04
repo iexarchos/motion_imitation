@@ -1,4 +1,8 @@
-# Motion Imitation
+# Kinematic domain randomization for A1
+
+Implementation of kinematic domain randomization (https://arxiv.org/abs/2011.01891) on A1 robot using Google's motion imitation code
+
+Initial Motion Imitation repo:
 
 Further development (new features, bug fixes etc) happen in the master branch.
 The 'paper' branch of this repository contains the original code accompanying the paper:
